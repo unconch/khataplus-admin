@@ -2,6 +2,8 @@ import { sql } from "@/lib/db";
 import { ShoppingCart, TrendingUp, Calendar, CreditCard, Building2, Search, Filter, MoreHorizontal, ArrowUpRight, Activity, Zap, ShieldCheck, Clock, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+export const dynamic = 'force-dynamic';
+
 export default async function SalesPage() {
     const [transactions, metrics] = await Promise.all([
         sql`

@@ -3,6 +3,8 @@ import { Megaphone, Bell, Calendar, Power, Trash2, Plus, Send, Radio, Activity, 
 import { cn } from "@/lib/utils";
 import { addAnnouncement, deleteAnnouncement, toggleAnnouncement } from "./actions";
 
+export const dynamic = 'force-dynamic';
+
 export default async function AnnouncementsPage() {
     const announcements = await sql`
         SELECT * FROM announcements 

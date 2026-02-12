@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardPage() {
   const adminStats = await getAdminStats();
   const recentLogs = await getRecentLogs();
@@ -95,7 +97,7 @@ export default async function DashboardPage() {
             </div>
 
             <div className="space-y-4">
-              {recentLogs.map((log, i) => (
+              {recentLogs.map((log: any, i: number) => (
                 <div key={i} className="flex items-center justify-between p-6 rounded-[2rem] bg-white/[0.03] border border-white/5 hover:bg-white/[0.06] transition-all group/item">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center neo-inner text-primary group-hover/item:scale-110 transition-transform">
@@ -136,7 +138,7 @@ export default async function DashboardPage() {
                 { label: "Protocol Load", value: adminStats.pulse.load, color: "bg-indigo-500" },
                 { label: "Mesh Stability", value: adminStats.pulse.stability.toFixed(1), color: "bg-emerald-500" },
                 { label: "Sync Velocity", value: Math.min(adminStats.pulse.velocity, 100), color: "bg-amber-500" },
-              ].map((pulse, i) => (
+              ].map((pulse: any, i: number) => (
                 <div key={i} className="space-y-2">
                   <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest">
                     <span className="text-muted-foreground">{pulse.label}</span>
