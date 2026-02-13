@@ -2,7 +2,7 @@
 
 import { sql } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { generateMarketingGimmick } from "@/lib/ai-generator";
+import { generateMarketingGimmick, generateMarketingIdeas } from "@/lib/ai-generator";
 
 export async function getCampaigns() {
     return await sql`SELECT * FROM marketing_campaigns ORDER BY created_at DESC`;
@@ -10,6 +10,10 @@ export async function getCampaigns() {
 
 export async function generateGimmickAction(title: string, content: string, city?: string, category?: string) {
     return await generateMarketingGimmick(title, content, city, category);
+}
+
+export async function generateCampaignIdeasAction(goal: string) {
+    return await generateMarketingIdeas(goal);
 }
 
 export async function createCampaign(formData: FormData) {

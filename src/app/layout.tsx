@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "Internal Admin Panel for KhataPlus",
 };
 
+import { AuthProvider } from "@/components/auth-provider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,13 +27,16 @@ export default function RootLayout({
           <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-pink-500/5 blur-[100px] liquid-blob opacity-40" style={{ animationDelay: '-4s' }} />
         </div>
 
-        <Sidebar />
-        <div className="lg:pl-24 min-h-screen relative z-10">
-          <main className="p-4 md:p-8">
-            {children}
-          </main>
-        </div>
+        <AuthProvider projectId={process.env.NEXT_PUBLIC_DESCOPE_PROJECT_ID!} baseUrl="/auth-api">
+          <Sidebar />
+          <div className="lg:pl-24 min-h-screen relative z-10">
+            <main className="p-4 md:p-8">
+              {children}
+            </main>
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );
 }
+

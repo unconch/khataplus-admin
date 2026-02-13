@@ -63,5 +63,57 @@ export async function generateMarketingGimmick(
                 hashtags: [`#${city || 'India'}Business`, '#LocalGrowth', '#KhataPlus']
             }
         ];
+
+    }
+}
+
+export type MarketingIdea = {
+    title: string;
+    description: string;
+    suggestedPlatforms: string[];
+};
+
+export async function generateMarketingIdeas(goal: string): Promise<MarketingIdea[]> {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    const prompt = `
+    You are a creative Marketing Director for KhataPlus (SaaS for Indian SMBs).
+    The user has a goal: "${goal}".
+    
+    Brainstorm 3 distinct, high-impact marketing campaign ideas to achieve this goal.
+    Focus on Indian market context (GST, Festivals, Business growth).
+
+    Output format: JSON array of 3 objects with keys: 
+    - title (short, punchy)
+    - description (1-2 sentences explaining the angle)
+    - suggestedPlatforms (array of strings: 'twitter', 'linkedin', 'whatsapp', 'reddit')
+  `;
+
+    try {
+        if (!process.env.GEMINI_API_KEY) throw new Error("No API Key");
+
+        const result = await model.generateContent(prompt);
+        const text = result.response.text();
+        const cleanJson = text.replace(/```json/g, "").replace(/```/g, "").trim();
+        return JSON.parse(cleanJson);
+    } catch (error) {
+        console.error("Idea Generation failed:", error);
+        return [
+            {
+                title: "Flash Sale Bonanza",
+                description: "Run a 24-hour discount campaign targeting late-night business owners.",
+                suggestedPlatforms: ["whatsapp", "twitter"]
+            },
+            {
+                title: "Customer Success Spotlight",
+                description: "Share a story of a local business saving money with KhataPlus.",
+                suggestedPlatforms: ["linkedin", "twitter"]
+            },
+            {
+                title: "GST Compliance Workshop",
+                description: "Host a mini-series on how to file GST perfectly using KhataPlus.",
+                suggestedPlatforms: ["linkedin", "reddit"]
+            }
+        ];
     }
 }

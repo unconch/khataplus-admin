@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
     LayoutDashboard,
+    Users,
     ShoppingCart,
     Building2,
     Globe,
@@ -20,6 +21,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/" },
+    { icon: Users, label: "Users", href: "/users" },
     { icon: Building2, label: "Organizations", href: "/organizations" },
     { icon: ShoppingCart, label: "Sales", href: "/sales" },
     { icon: Globe, label: "pSEO Engine", href: "/pseo" },

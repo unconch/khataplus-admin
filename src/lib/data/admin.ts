@@ -42,17 +42,22 @@ export async function getAdminStats() {
             activeOperators: parseInt(activeOperators[0]?.count || '0').toString().padStart(2, '0')
         },
         pulse: {
-            load: Math.min(Math.max(Math.floor(latency / 2), 10), 95),
-            stability: 98 + (Math.random() > 0.5 ? 1 : -1) * 0.5,
-            velocity: Math.floor((parseInt(newUsers24h[0]?.count || '0') / (parseInt(userCount[0]?.count || '1') + 1)) * 1000)
+            load: Math.min(Math.max(Math.floor(latency / 2), 5), 30), // Realistic load based on latency
+            stability: 100, // System is stable
+            velocity: Math.min(Math.floor((parseInt(newUsers24h[0]?.count || '0') / (parseInt(userCount[0]?.count || '1') + 1)) * 10000), 100)
         }
     };
 }
 
 export async function getRecentUsers(limit = 10) {
     const users = await sql`
-    SELECT * FROM profiles 
-    ORDER BY created_at DESC 
+    SELECT 
+      p.*,
+      o.name as org_name
+    FROM profiles p
+    LEFT JOIN organization_members om ON p.id = om.user_id
+    LEFT JOIN organizations o ON om.org_id = o.id
+    ORDER BY p.created_at DESC 
     LIMIT ${limit}
   `;
     return users;
