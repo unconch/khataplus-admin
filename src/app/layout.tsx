@@ -29,6 +29,7 @@ export default function RootLayout({
 
         <AuthProvider
           projectId={process.env.NEXT_PUBLIC_DESCOPE_PROJECT_ID!}
+          baseUrl={process.env.NODE_ENV === "production" ? "/auth-api" : undefined}
         >
           <Sidebar />
           <div className="lg:pl-24 min-h-screen relative z-10">
