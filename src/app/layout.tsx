@@ -27,7 +27,10 @@ export default function RootLayout({
           <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-pink-500/5 blur-[100px] liquid-blob opacity-40" style={{ animationDelay: '-4s' }} />
         </div>
 
-        <AuthProvider projectId={process.env.NEXT_PUBLIC_DESCOPE_PROJECT_ID!} baseUrl="/auth-api">
+        <AuthProvider
+          projectId={process.env.NEXT_PUBLIC_DESCOPE_PROJECT_ID!}
+          baseUrl={process.env.NODE_ENV === "production" ? "/auth-api" : undefined}
+        >
           <Sidebar />
           <div className="lg:pl-24 min-h-screen relative z-10">
             <main className="p-4 md:p-8">
